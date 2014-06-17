@@ -222,7 +222,7 @@ var Player = function(config) {
 	// add default configuration
 	for(var key in Player.default) if(this.config[key] === undefined && Player.default[key] !== undefined) this.config[key] = Player.default[key];
 	
-	this.element = document.createElement("div");
+	this.element = config.playerNode || document.createElement("div");
 	this.board = new WGo.Board(this.element, this.config.board);
 	
 	this.init();

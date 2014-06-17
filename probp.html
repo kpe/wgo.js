@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Go Problem Player</title>
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<!--
+    <script src="wgo/wgo.js"></script>
+    <script type="text/javascript" src="wgo/kifu.js"></script>
+    <script type="text/javascript" src="wgo/sgfparser.js"></script>
+    <script type="text/javascript" src="wgo/player.js"></script>
+-->
+    <script src="wgo/wgoprob.min.js"></script>
+    <link rel="stylesheet" href="wgo/wgo.player.css"/>
+    
+    <style>
+        body {
+            margin:0;
+            padding:0;
+        }
+        #visible {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        @media (orientation: portrait) {
+            #visible {
+                right:0;
+            }
+            .right-aside {
+                width: 100%;
+            }
+        }
+        @media (orientation: landscape) {
+            #visible {
+                bottom:0;
+            }
+            .right-aside {
+                width: 210px;
+            }
+        }
+        #board, #info, .right-aside, .left,.right,.center {
+            display: inline-block;
+            vertical-align: top;
+        }
+        #control {
+            text-align: center;
+        }
+        .left {
+            float:left;
+        }
+        .center {
+            margin: 0 auto;
+        }
+        .right {
+            float:right;
+        }
+        #info {
+            font-family: Calibri, Tahoma, Arial;
+        }
+    </style>
+</head>
+<body>
+
+<div id="visible"></div>
+<div id="board"></div>
+<div class="right-aside">
+    <div id="control">
+        <div class="left">
+            <button id="prev-problem" class="wgo-button wgo-button-first"></button>
+        </div>
+        <div class="center">
+            <button id="prev" class="wgo-button wgo-button-previous"></button>
+            <button id="next" class="wgo-button wgo-button-next"></button>
+        </div>
+        <div id="next-problem" class="right">
+            <button class="wgo-button wgo-button-last"></button>
+        </div>
+    </div>
+    <div id="info">
+    </div>
+</div>
+
+<script>
+    var pid = (function(){
+        var id = /#(\d+)$/.exec(document.location.hash);
+        return (id && parseInt(id[1])) || 1;
+    })();
+
+    var body = document.getElementById('visible');
+    var bel = document.getElementById('board');
+    var bstyle = window.getComputedStyle(body);
+    var bwidth = parseInt(bstyle.width.slice(0,-2));
+    var bheight = parseInt(bstyle.height.slice(0,-2));
+
+    console.log('bwidth',bwidth,bheight);
+
+    var player = new WGo.Player({
+       playerNode: bel,
+       board: {
+           width: bwidth || bheight
+       },
+       layout: {
+           right:['Control','InfoBox']
+       }
+    });
+
+    function loadProblem() {
+        var file = 'graded/'+('00'+pid).slice(-3)+'.sgf';
+        player.loadSgfFromFile(file);
+    }
+    function initNavigation() {
+        document.getElementById('next').addEventListener('click', function () {
+            player.next();
+        });
+        document.getElementById('prev').addEventListener('click', function () {
+            player.previous();
+        });
+        document.getElementById('next-problem').addEventListener('click', function () {
+            pid = Math.min(239, pid+1);
+            loadProblem();
+        });
+        document.getElementById('prev-problem').addEventListener('click', function () {
+            pid = Math.max(1, pid-1);
+            loadProblem();
+        });
+        player.addEventListener("kifuLoaded", function(e) {
+            var _update = function(e){
+                console.log('update',e);
+                document.getElementById('info').innerText = e.node.comment;
+            };
+            if(e.kifu.hasComments()) {
+                player.addEventListener("update", _update);
+            } else {
+                if(_update) {
+                    player.removeEventListener("update", _update);
+                }
+            }
+        }.bind(this));
+    }
+
+    loadProblem();
+    initNavigation();
+
+</script>
+
+</body>
+</html>

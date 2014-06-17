@@ -47,7 +47,14 @@ java -jar $TOPDIR/compiler/compiler.jar \
 		scoremode.js \
 		player.permalink.js
 
+
 # prepend licence information
 echo -n '/*! MIT license, more info: wgo.waltheri.net */' > wgo.player.min.js
 cat _tmp.js >> wgo.player.min.js
 rm _tmp.js
+
+#compress problem player
+java -jar $TOPDIR/compiler/compiler.jar \
+  --language_in ECMASCRIPT5 \
+	--js_output_file=wgoprob.min.js \
+	  wgo.js kifu.js sgfparser.js player.js
