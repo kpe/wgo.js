@@ -2,25 +2,27 @@
 <html>
 <head>
 	<title>WGo</title>
+    <meta name="mobile-web-app-capable" content="yes">
     <!--
-
-	<script type="text/javascript" src="wgo/wgo.min.js"></script>
-	<script type="text/javascript" src="wgo/wgo.player.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="wgo/wgo.player.css" />
-   -->
-        <script type="text/javascript" src="wgo/wgo.js"></script>
-        <script type="text/javascript" src="wgo/kifu.js"></script>
-        <script type="text/javascript" src="wgo/sgfparser.js"></script>
-        <script type="text/javascript" src="wgo/player.js"></script>
-        <script type="text/javascript" src="wgo/basicplayer.js"></script>
-        <script type="text/javascript" src="wgo/basicplayer.component.js"></script>
-        <script type="text/javascript" src="wgo/basicplayer.infobox.js"></script>
-        <script type="text/javascript" src="wgo/basicplayer.commentbox.js"></script>
-        <script type="text/javascript" src="wgo/basicplayer.control.js"></script>
-        <script type="text/javascript" src="wgo/player.editable.js"></script>
-        <script type="text/javascript" src="wgo/scoremode.js"></script>
-        <script type="text/javascript" src="wgo/player.permalink.js"></script>
+        <script type="text/javascript" src="wgo/wgo.min.js"></script>
+        <script type="text/javascript" src="wgo/wgo.player.min.js"></script>
         <link rel="stylesheet" type="text/css" href="wgo/wgo.player.css" />
+    -->
+
+            <script type="text/javascript" src="wgo/wgo.js"></script>
+            <script type="text/javascript" src="wgo/kifu.js"></script>
+            <script type="text/javascript" src="wgo/sgfparser.js"></script>
+            <script type="text/javascript" src="wgo/player.js"></script>
+            <script type="text/javascript" src="wgo/basicplayer.js"></script>
+            <script type="text/javascript" src="wgo/basicplayer.component.js"></script>
+            <script type="text/javascript" src="wgo/basicplayer.infobox.js"></script>
+            <script type="text/javascript" src="wgo/basicplayer.commentbox.js"></script>
+            <script type="text/javascript" src="wgo/basicplayer.control.js"></script>
+            <script type="text/javascript" src="wgo/player.editable.js"></script>
+            <script type="text/javascript" src="wgo/scoremode.js"></script>
+            <script type="text/javascript" src="wgo/player.permalink.js"></script>
+            <link rel="stylesheet" type="text/css" href="wgo/wgo.player.css" />
+
 
 
     <style>
@@ -32,8 +34,15 @@
         .player {
             margin: 0;
         }
+        .wgo-ctrlgroup .wgo-button {
+            width: 33px;
+            height: 44px;
+        }
         .wgo-player-center {
             width: auto;
+        }
+        .wgo-player-board {
+            min-width: 320px;
         }
         .wgo-twocols .wgo-player-center {
             width: auto;
@@ -125,7 +134,6 @@ Your browser doesn't support WGo Player. Use some modern browser like IE9, Googl
 
     loadProblem();
     initProblemNavigation();
-    window.scrollTo(0,1);
 </script>
 
 </body>

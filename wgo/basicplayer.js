@@ -203,8 +203,8 @@ BasicPlayer.prototype.updateDimensions = function() {
 		this.element.removeChild(this.element.firstChild);
 	}
 	
-	var tmp_w = window.innerWidth;
-	var tmp_h = window.innerHeight;
+    var tmp_w = parseInt(css.width);
+    var tmp_h = parseInt(css.height);
 	var tmp_mh = parseInt(css.maxHeight) || 0;
 
 	for(var i = 0; i < els.length; i++) {
@@ -226,8 +226,8 @@ BasicPlayer.prototype.updateDimensions = function() {
 		this.lastLayout = this.currentLayout;
 	}
 	
-	var bw = this.width - this.regions.left.element.clientWidth - this.regions.right.element.clientWidth;
-	//var bw = this.dom.board.clientWidth;
+	//var bw = this.width - this.regions.left.element.clientWidth - this.regions.right.element.clientWidth;
+	var bw = this.dom.board.clientWidth;
 	var bh = this.height || this.maxHeight;
 
 	if(bh) {
@@ -250,10 +250,12 @@ BasicPlayer.prototype.updateDimensions = function() {
 	else {
 		this.dom.board.style.height = "auto";
 		this.dom.board.style.paddingTop = "0";
+
+        this.regions.right.element.style['max-width'] = (window.innerWidth-bw) +'px';
 	}
 	
-	this.regions.left.element.style.height = this.dom.center.offsetHeight+"px";
-	this.regions.right.element.style.height = this.dom.center.offsetHeight+"px";
+//	this.regions.left.element.style.height = this.dom.center.offsetHeight+"px";
+//	this.regions.right.element.style.height = this.dom.center.offsetHeight+"px";
 
 	for(var i in this.components) {
 		if(this.components[i].updateDimensions) this.components[i].updateDimensions();
