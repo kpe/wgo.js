@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>WGo</title>
+    <!--
+
+	<script type="text/javascript" src="wgo/wgo.min.js"></script>
+	<script type="text/javascript" src="wgo/wgo.player.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="wgo/wgo.player.css" />
+   -->
+        <script type="text/javascript" src="wgo/wgo.js"></script>
+        <script type="text/javascript" src="wgo/kifu.js"></script>
+        <script type="text/javascript" src="wgo/sgfparser.js"></script>
+        <script type="text/javascript" src="wgo/player.js"></script>
+        <script type="text/javascript" src="wgo/basicplayer.js"></script>
+        <script type="text/javascript" src="wgo/basicplayer.component.js"></script>
+        <script type="text/javascript" src="wgo/basicplayer.infobox.js"></script>
+        <script type="text/javascript" src="wgo/basicplayer.commentbox.js"></script>
+        <script type="text/javascript" src="wgo/basicplayer.control.js"></script>
+        <script type="text/javascript" src="wgo/player.editable.js"></script>
+        <script type="text/javascript" src="wgo/scoremode.js"></script>
+        <script type="text/javascript" src="wgo/player.permalink.js"></script>
+        <link rel="stylesheet" type="text/css" href="wgo/wgo.player.css" />
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .player {
+            margin: 0;
+        }
+        .wgo-player-center {
+            width: auto;
+        }
+        .wgo-twocols .wgo-player-center {
+            width: auto;
+        }
+
+        .wgo-comments-wrapper {
+            min-height: 250px;
+        }
+
+        .wgo-comment-text .wgo-info-list , .wgo-comment-text .wgo-info-item {
+            display: none;
+        }
+        .wgo-button-multinext, .wgo-button-multiprev,
+        .wgo-button-first, .wgo-button-last,
+        .wgo-button-menu, .wgo-button-about {
+            display:none;
+        }
+        #prev-problem, #next-problem {
+            display:inline-block;
+        }
+        .wgo-comments .wgo-box-title {
+            display: none;
+        }
+        .wgo-twocols .wgo-commentbox {
+            top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="player" class="player">
+Your browser doesn't support WGo Player. Use some modern browser like IE9, Google Chrome or Mozilla Firefox.
+</div>
+<script>
+
+    var pid = (function(){
+        var id = /#(\d+)$/.exec(document.location.hash);
+        return (id && parseInt(id[1])) || 1;
+    })();
+    function isPortrait() {
+        return window.innerWidth < window.innerHeight*1.2;
+    }
+    var layout = [
+        {
+            conditions: {
+                custom: function(){return isPortrait();}
+            },
+            layout: {bottom:['Control','CommentBox']},
+            className:''
+        },{
+            conditions: {
+                custom: function(){return !isPortrait();}
+            },
+            layout: {right:['Control','CommentBox']},
+            className:'wgo-twocols'
+        }
+    ];
+    var el = document.getElementById('player');
+    var player = new WGo.BasicPlayer(el, {
+        layout: layout
+    });
+
+    function loadProblem() {
+        var file = 'graded/'+('00'+pid).slice(-3)+'.sgf';
+        player.loadSgfFromFile(file);
+    }
+
+    function initProblemNavigation() {
+        var ctrlLeft = document.querySelector('.wgo-ctrlgroup-left');
+        var ctrlRight = document.querySelector('.wgo-ctrlgroup-right');
+        var btnPrev = document.createElement('button');
+        btnPrev.id = 'prev-problem';
+        btnPrev.setAttribute('class', 'wgo-button wgo-button-first');
+        ctrlLeft.insertBefore(btnPrev, ctrlLeft.firstChild);
+
+        var btnNext = document.createElement('button');
+        btnNext.id = 'next-problem';
+        btnNext.setAttribute('class', 'wgo-button wgo-button-last');
+        ctrlRight.appendChild(btnNext);
+        document.querySelector('#prev-problem').onclick = function(){
+            pid = Math.max(1, pid-1);
+            loadProblem();
+        };
+        document.querySelector('#next-problem').onclick = function(){
+            pid = Math.min(239, pid+1);
+            loadProblem();
+        };
+    }
+
+    loadProblem();
+    initProblemNavigation();
+    window.scrollTo(0,1);
+</script>
+
+</body>
+</html>

@@ -203,8 +203,8 @@ BasicPlayer.prototype.updateDimensions = function() {
 		this.element.removeChild(this.element.firstChild);
 	}
 	
-	var tmp_w = parseInt(css.width);
-	var tmp_h = parseInt(css.height);
+	var tmp_w = window.innerWidth;
+	var tmp_h = window.innerHeight;
 	var tmp_mh = parseInt(css.maxHeight) || 0;
 
 	for(var i = 0; i < els.length; i++) {
@@ -226,8 +226,8 @@ BasicPlayer.prototype.updateDimensions = function() {
 		this.lastLayout = this.currentLayout;
 	}
 	
-	//var bw = this.width - this.regions.left.element.clientWidth - this.regions.right.element.clientWidth;
-	var bw = this.dom.board.clientWidth;
+	var bw = this.width - this.regions.left.element.clientWidth - this.regions.right.element.clientWidth;
+	//var bw = this.dom.board.clientWidth;
 	var bh = this.height || this.maxHeight;
 
 	if(bh) {
@@ -245,7 +245,7 @@ BasicPlayer.prototype.updateDimensions = function() {
 	
 	if(diff > 0) {
 		this.dom.board.style.height = bh+"px";
-		this.dom.board.style.paddingTop = (diff/2)+"px";
+		//this.dom.board.style.paddingTop = (diff/2)+"px";
 	}
 	else {
 		this.dom.board.style.height = "auto";

@@ -166,7 +166,7 @@ var Board = function(elem, config) {
 	// set initial dimensions
 
 	// set the pixel ratio for HDPI (e.g. Retina) screens
-	this.pixelRatio = window.devicePixelRatio || 1;
+	this.pixelRatio = 1;//window.devicePixelRatio || 1;
 
 	if(this.width && this.height) this.setDimensions(this.width, this.height);
 	else if(this.width) this.setWidth(this.width);

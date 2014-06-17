@@ -29,14 +29,14 @@ var fullscreenChange = function() {
 		this.dispatchEvent({
 			type: "fullscreenChange",
 			target: this,
-			on: true,
+			on: true
 		});
 	} 
 	else {
 		this.dispatchEvent({
 			type: "fullscreenChange",
 			target: this,
-			on: false,
+			on: false
 		});
 		document[FSCHANGE] = "";
 	}
@@ -57,7 +57,7 @@ var fullscreenProcess = function(elem) {
  * Toggle fullscreen mode.
  */
 	
-Player.prototype.toggleFullscreen: function() {
+Player.prototype.toggleFullscreen = function() {
 	if(FSCHANGE) {
 		document[FSCHANGE] = fullscreenChange.bind(this);
 		fullscreenProcess.call(undefined, this.view.element);
